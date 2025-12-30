@@ -36,4 +36,13 @@ class Download(Node):
 
         self.last_bytes = now_bytes
         self.last_time = now_time
+def main(args=None):
+    rclpy.init(args=args)
+    node = Download()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
 
