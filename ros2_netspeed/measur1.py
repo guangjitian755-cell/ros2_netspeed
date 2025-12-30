@@ -5,7 +5,8 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64
-import speedtest
+import psutil
+import time
 
 class Download(Node):
     def __init__(self):
@@ -13,20 +14,22 @@ class Download(Node):
 
         self.pub = self.create_publisher(Float64, 'download_speed', 10)
 
-        self.st = speedtest.Speedtest()
+        # 初期値
+        self.prev = psutil.net_io_counters()
+        self.timer = self.create_timer(1.0, self.timer_callback)
 
-        self.measure_speed()
+    def timer_callback(self):
+        now = psutil.net_io_counters()
 
-        self.timer = self.create_timer(60.0, self.measure_speed)
+        # bytes_recv の差分 → Mbps
+        diff = now.bytes_recv - self.prev.bytes_recv
+        mbps = diff * 8 / 1e6
 
-    def measure_speed(self):
-        try:
-            download = self.st.download() / 1_000_000  # Mbps
-            msg = Float64()
-            msg.data = float(download)
-            self.pub.publish(msg)
-        except Exception as e:
-            self.get_logger().warn(f"Speedtest error: {e}")
+        msg = Float64()
+        msg.data = float(mbps)
+
+        self.pub.publish(msg)
+        self.prev = now
 def main(args=None):
     rclpy.init(args=args)
     node = Download()
@@ -34,7 +37,4 @@ def main(args=None):
     node.destroy_node()
     rclpy.shutdown()
 
-
-if __name__ == '__main__':
-    main()
 
