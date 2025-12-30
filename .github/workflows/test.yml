@@ -20,7 +20,7 @@ jobs:
           
           # 3. ビルド (Pythonパッケージでも念のため実行)
           colcon build
-        source install/setup.bash
+          source install/setup.bash
           
           # 4. テストの実行
           bash ./src/ros2_netspeed/test/test.bash /root
