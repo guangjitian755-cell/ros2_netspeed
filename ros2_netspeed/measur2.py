@@ -8,34 +8,33 @@ from std_msgs.msg import Float64
 import psutil
 import time
 
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float64
+import speedtest
+
 class Upload(Node):
     def __init__(self):
         super().__init__('upload')
 
         self.pub = self.create_publisher(Float64, 'upload_speed', 10)
 
-        self.last_bytes = psutil.net_io_counters(pernic=True)["eth0"]
-        self.last_time = time.time()
+        # Speedtest は1回だけ作る（403対策）
+        self.st = speedtest.Speedtest()
 
-        self.timer = self.create_timer(1.0, self.measure_speed)
+        # 測定間隔は60秒（API制限対策）
+        self.timer = self.create_timer(60.0, self.measure_speed)
 
     def measure_speed(self):
-        now_bytes = psutil.net_io_counters(pernic=True)["eth0"]
-        now_time = time.time()
+        try:
+            upload = self.st.upload() / 1_000_000  # Mbps
+            msg = Float64()
+            msg.data = float(upload)
+            self.pub.publish(msg)
+        except Exception as e:
+            self.get_logger().warn(f"Speedtest error: {e}")
 
-        dt = now_time - self.last_time
-        if dt == 0:
-            return
 
-        upload_bps = (now_bytes.bytes_sent - self.last_bytes.bytes_sent) / dt
-        upload_mbps = (upload_bps * 8) / 1_000_000
-
-        msg = Float64()
-        msg.data = float(upload_mbps)
-        self.pub.publish(msg)
-
-        self.last_bytes = now_bytes
-        self.last_time = now_time
 def main(args=None):
     rclpy.init(args=args)
     node = Upload()
@@ -43,5 +42,7 @@ def main(args=None):
     node.destroy_node()
     rclpy.shutdown()
 
+
 if __name__ == '__main__':
     main()
+
