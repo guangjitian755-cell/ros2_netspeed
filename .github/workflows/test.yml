@@ -12,4 +12,5 @@ jobs:
           rsync -av ./ /root/ros2_ws/src/ros2_netspeed/ 
           cd /root/ros2_ws
           source /opt/ros/humble/setup.bash
+          source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
           bash -xv ./src/ros2_netspeed/test/test.bash /root
