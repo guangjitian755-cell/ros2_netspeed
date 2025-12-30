@@ -14,6 +14,9 @@ class Download(Node):
         self.pub = self.create_publisher(Float64, 'download_speed', 10)
 
         self.st = speedtest.Speedtest()
+
+        self.measure_speed()
+
         self.timer = self.create_timer(60.0, self.measure_speed)
 
     def measure_speed(self):

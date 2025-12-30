@@ -19,10 +19,10 @@ class Upload(Node):
 
         self.pub = self.create_publisher(Float64, 'upload_speed', 10)
 
-        # Speedtest は1回だけ作る（403対策）
         self.st = speedtest.Speedtest()
 
-        # 測定間隔は60秒（API制限対策）
+        self.measure_speed()
+        
         self.timer = self.create_timer(60.0, self.measure_speed)
 
     def measure_speed(self):
