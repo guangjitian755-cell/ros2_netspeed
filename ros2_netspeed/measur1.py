@@ -21,7 +21,6 @@ class Download(Node):
         msg.data = float(download)
 
         self.pub.publish(msg)
-        self.get_logger().info(f"{msg.data}")
 
 def main():
     rclpy.init()
