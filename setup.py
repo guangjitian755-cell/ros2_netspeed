@@ -13,10 +13,10 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='pikapika',
+    maintainer='Hikaru Yoshida',
     maintainer_email='guangjitian755@gmail.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    description='a package for measur network speed',
+    license='BSD-3-Clause',
     extras_require={
         'test': [
             'pytest',
