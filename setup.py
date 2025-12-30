@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='Hikaru Yoshida',
     maintainer_email='guangjitian755@gmail.com',
-    description='a package for measur network speed',
+    description='a package for measuring network speed',
     license='BSD-3-Clause',
     extras_require={
         'test': [
