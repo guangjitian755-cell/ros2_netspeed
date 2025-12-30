@@ -21,7 +21,6 @@ class Upload(Node):
         msg.data = float(upload)
 
         self.pub.publish(msg)
-        self.get_logger().info(f"{msg.data}")
 
 def main():
     rclpy.init()
