@@ -5,7 +5,7 @@
   <version>0.0.0</version>
   <description>a package for measuring network speed</description>
   <maintainer email="guangjitian755@gmail.com">Hikaru Yoshida</maintainer>
-  <license>TODO: License declaration</license>
+  <license>BSD-3-Clause</license>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
