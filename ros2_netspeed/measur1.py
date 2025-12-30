@@ -14,13 +14,13 @@ class Download(Node):
 
         self.pub = self.create_publisher(Float64, 'download_speed', 10)
 
-        self.last_bytes = psutil.net_io_counters()
+        self.last_bytes = psutil.net_io_counters(pernic=True)["eth0"]
         self.last_time = time.time()
 
         self.timer = self.create_timer(1.0, self.measure_speed)
 
     def measure_speed(self):
-        now_bytes = psutil.net_io_counters()
+        now_bytes = psutil.net_io_counters(pernic=True)["eth0"]
         now_time = time.time()
 
         dt = now_time - self.last_time
