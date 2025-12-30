@@ -1,4 +1,5 @@
-#!/bin/bash -x -v
+#!/bin/bash
+set -xv
 # SPDX-FileCopyrightText: 2025 Hikaru Yoshida
 # SPDX-License-Identifier: BSD-3-Clause
 
