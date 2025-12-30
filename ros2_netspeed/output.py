@@ -23,10 +23,19 @@ class Output(Node):
         )
 
     def download_callback(self, msg):
-        self.get_logger().info(f"{msg.data}")
+        self.latest_download = msg.data
+        self.print_if_ready()
 
     def upload_callback(self, msg):
-        self.get_logger().info(f"{msg.data}")
+        self.latest_upload = msg.data
+        self.print_if_ready()
+
+    def print_if_ready(self):
+        if self.latest_download is not None and self.latest_upload is not None:
+            print(f"{self.latest_download:15.3f}  {self.latest_upload:15.3f}")
+            self.latest_download = None
+            self.latest_upload = None
+
 
 def main():
     rclpy.init()
