@@ -36,7 +36,7 @@ class Output(Node):
 
     def print_if_ready(self):
         if self.latest_download is not None and self.latest_upload is not None:
-            print(f"{self.latest_download:15.3f}  {self.latest_upload:15.3f}")
+            print(f"{self.latest_download:15.3f}  {self.latest_upload:15.3f}", flush=True)
             self.latest_download = None
             self.latest_upload = None
 
