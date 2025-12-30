@@ -9,6 +9,10 @@ from std_msgs.msg import Float64
 class Output(Node):
     def __init__(self):
         super().__init__('output')
+
+        self.latest_download = None
+        self.latest_upload = None
+
         self.sub_download = self.create_subscription(
             Float64,
             'download_speed',
