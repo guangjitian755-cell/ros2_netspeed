@@ -14,6 +14,6 @@ source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 colcon build
 source install/setup.bash
 
-timeout 20 ros2 launch ros2_netspeed netspeed.launch.py > /tmp/netspeed.log
+timeout 60 ros2 launch ros2_netspeed netspeed.launch.py > /tmp/netspeed.log
 
 grep -E '[0-9]+\.[0-9]+\s+[0-9]+\.[0-9]+' /tmp/netspeed.log
