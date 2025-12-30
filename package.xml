@@ -3,8 +3,8 @@
 <package format="3">
   <name>ros2_netspeed</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="guangjitian755@gmail.com">pikapika</maintainer>
+  <description>a package for measuring network speed</description>
+  <maintainer email="guangjitian755@gmail.com">Hikaru Yoshida</maintainer>
   <license>TODO: License declaration</license>
 
   <test_depend>ament_copyright</test_depend>
