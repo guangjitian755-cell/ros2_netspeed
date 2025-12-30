@@ -7,10 +7,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: build and test
+        # ここに shell: bash を追加
+        shell: bash
         run: |
+          # 1. ワークスペースの準備
           mkdir -p /root/ros2_ws/src
-          rsync -av ./ /root/ros2_ws/src/ros2_netspeed/ 
+          rsync -av ./ /root/ros2_ws/src/ros2_netspeed/
           cd /root/ros2_ws
+          
+          # 2. 環境の読み込み (shell: bash があれば正しく動作します)
           source /opt/ros/humble/setup.bash
-          source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
-          /bin/bash ./src/ros2_netspeed/test/test.bash /root
+          
+          # 3. ビルド (Pythonパッケージでも念のため実行)
+          colcon build
+        source install/setup.bash
+          
+          # 4. テストの実行
+          bash ./src/ros2_netspeed/test/test.bash /root
